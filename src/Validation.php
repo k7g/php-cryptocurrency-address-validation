@@ -26,9 +26,9 @@ abstract class Validation implements ValidationInterface
         $chars = "0123456789ABCDEF";
         $return = "0";
         for ($i = 0; $i < strlen($hex); $i++) {
-            $current = (string)strpos($chars, $hex[$i]);
-            $return = (string)bcmul($return, "16", 0);
-            $return = (string)bcadd($return, $current, 0);
+            $current = (string) strpos($chars, $hex[$i]);
+            $return = (string) bcmul($return, "16", 0);
+            $return = (string) bcadd($return, $current, 0);
         }
         return $return;
     }
@@ -38,8 +38,8 @@ abstract class Validation implements ValidationInterface
         $chars = "0123456789ABCDEF";
         $return = "";
         while (bccomp($dec, 0) == 1) {
-            $dv = (string)bcdiv($dec, "16", 0);
-            $rem = (integer)bcmod($dec, "16");
+            $dv = (string) bcdiv($dec, "16", 0);
+            $rem = (integer) bcmod($dec, "16");
             $dec = $dv;
             $return = $return.$chars[$rem];
         }
@@ -52,15 +52,15 @@ abstract class Validation implements ValidationInterface
 
         $return = "0";
         for ($i = 0; $i < strlen($base58); $i++) {
-            $current = (string)strpos(static::$base58Dictionary, $base58[$i]);
-            $return = (string)bcmul($return, "58", 0);
-            $return = (string)bcadd($return, $current, 0);
+            $current = (string) strpos(static::$base58Dictionary, $base58[$i]);
+            $return = (string) bcmul($return, "58", 0);
+            $return = (string) bcadd($return, $current, 0);
         }
 
         $return = self::encodeHex($return);
 
         //leading zeros
-        for ($i = 0; $i < strlen($origbase58) && $origbase58[$i] == "1"; $i++) {
+        for ($i = 0; $i < strlen($origbase58) && $origbase58[$i] == static::$base58Dictionary[0]; $i++) {
             $return = "00".$return;
         }
 
@@ -78,8 +78,8 @@ abstract class Validation implements ValidationInterface
         $hex = self::decodeHex($hex);
         $return = "";
         while (bccomp($hex, 0) == 1) {
-            $dv = (string)bcdiv($hex, "58", 0);
-            $rem = (integer)bcmod($hex, "58");
+            $dv = (string) bcdiv($hex, "58", 0);
+            $rem = (integer) bcmod($hex, "58");
             $hex = $dv;
             $return = $return.static::$base58Dictionary[$rem];
         }
@@ -155,7 +155,7 @@ abstract class Validation implements ValidationInterface
         }
         $version = substr($hexAddress, 0, 2);
 
-        if ( ! $this->validateVersion($version)) {
+        if (!$this->validateVersion($version)) {
             return false;
         }
 
