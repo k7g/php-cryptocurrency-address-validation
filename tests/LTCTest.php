@@ -2,7 +2,7 @@
 
 use Murich\PhpCryptocurrencyAddressValidation\Validation\LTC;
 
-class LTCTest extends PHPUnit_Framework_TestCase
+class LTCTest extends \PHPUnit\Framework\TestCase
 {
     public function testValidator()
     {

@@ -2,7 +2,7 @@
 
 use Murich\PhpCryptocurrencyAddressValidation\Validation\DASH;
 
-class DASHTest extends PHPUnit_Framework_TestCase
+class DASHTest extends \PHPUnit\Framework\TestCase
 {
     public function testValidator()
     {

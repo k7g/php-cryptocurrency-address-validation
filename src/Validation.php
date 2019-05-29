@@ -6,6 +6,9 @@ use Murich\PhpCryptocurrencyAddressValidation\Validation\ValidationInterface;
 
 abstract class Validation implements ValidationInterface
 {
+
+    protected static $base58Dictionary = '123456789ABCDEFGHJKLMNPQRSTUVWXYZabcdefghijkmnopqrstuvwxyz';
+
     protected $address;
     protected $addressVersion;
     protected $base58PrefixToHexVersion;
@@ -38,7 +41,7 @@ abstract class Validation implements ValidationInterface
             $dv = (string)bcdiv($dec, "16", 0);
             $rem = (integer)bcmod($dec, "16");
             $dec = $dv;
-            $return = $return . $chars[$rem];
+            $return = $return.$chars[$rem];
         }
         return strrev($return);
     }
@@ -47,10 +50,9 @@ abstract class Validation implements ValidationInterface
     {
         $origbase58 = $base58;
 
-        $chars = "123456789ABCDEFGHJKLMNPQRSTUVWXYZabcdefghijkmnopqrstuvwxyz";
         $return = "0";
         for ($i = 0; $i < strlen($base58); $i++) {
-            $current = (string)strpos($chars, $base58[$i]);
+            $current = (string)strpos(static::$base58Dictionary, $base58[$i]);
             $return = (string)bcmul($return, "58", 0);
             $return = (string)bcadd($return, $current, 0);
         }
@@ -59,11 +61,11 @@ abstract class Validation implements ValidationInterface
 
         //leading zeros
         for ($i = 0; $i < strlen($origbase58) && $origbase58[$i] == "1"; $i++) {
-            $return = "00" . $return;
+            $return = "00".$return;
         }
 
         if (strlen($return) % 2 != 0) {
-            $return = "0" . $return;
+            $return = "0".$return;
         }
 
         return $return;
@@ -73,20 +75,22 @@ abstract class Validation implements ValidationInterface
     {
         $orighex = $hex;
 
-        $chars = "123456789ABCDEFGHJKLMNPQRSTUVWXYZabcdefghijkmnopqrstuvwxyz";
         $hex = self::decodeHex($hex);
         $return = "";
         while (bccomp($hex, 0) == 1) {
             $dv = (string)bcdiv($hex, "58", 0);
             $rem = (integer)bcmod($hex, "58");
             $hex = $dv;
-            $return = $return . $chars[$rem];
+            $return = $return.static::$base58Dictionary[$rem];
         }
         $return = strrev($return);
 
         //leading zeros
-        for ($i = 0; $i < strlen($orighex) && substr($orighex, $i, 2) == "00"; $i += 2) {
-            $return = "1" . $return;
+        for (
+            $i = 0; $i < strlen($orighex) && substr($orighex, $i, 2) == "00";
+            $i += 2
+        ) {
+            $return = "1".$return;
         }
 
         return $return;
@@ -94,11 +98,11 @@ abstract class Validation implements ValidationInterface
 
     protected function hash160ToAddress($hash160)
     {
-        $hash160 = $this->addressVersion . $hash160;
+        $hash160 = $this->addressVersion.$hash160;
         $check = pack("H*", $hash160);
         $check = hash("sha256", hash("sha256", $check, true));
         $check = substr($check, 0, 8);
-        $hash160 = strtoupper($hash160 . $check);
+        $hash160 = strtoupper($hash160.$check);
 
         if (strlen($hash160) % 2 != 0) {
             $this->addressVersion = null;
@@ -116,7 +120,7 @@ abstract class Validation implements ValidationInterface
 
     protected static function hash160($data)
     {
-        $data=pack("H*" , $data);
+        $data = pack("H*", $data);
         return strtoupper(hash("ripemd160", hash("sha256", $data, true)));
     }
 
@@ -133,7 +137,8 @@ abstract class Validation implements ValidationInterface
     protected function determineVersion()
     {
         if (isset($this->base58PrefixToHexVersion[$this->address[0]])) {
-            $this->addressVersion =  $this->base58PrefixToHexVersion[$this->address[0]];
+            $this->addressVersion
+                = $this->base58PrefixToHexVersion[$this->address[0]];
         }
     }
 
@@ -150,7 +155,7 @@ abstract class Validation implements ValidationInterface
         }
         $version = substr($hexAddress, 0, 2);
 
-        if (!$this->validateVersion($version)) {
+        if ( ! $this->validateVersion($version)) {
             return false;
         }
 

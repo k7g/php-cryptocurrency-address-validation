@@ -2,7 +2,7 @@
 
 use Murich\PhpCryptocurrencyAddressValidation\Validation\BTC;
 
-class BTCTest extends PHPUnit_Framework_TestCase
+class BTCTest extends \PHPUnit\Framework\TestCase
 {
 
     public function testValidator()

@@ -2,7 +2,7 @@
 
 use Murich\PhpCryptocurrencyAddressValidation\Validation\ETH;
 
-class ETHTest extends PHPUnit_Framework_TestCase
+class ETHTest extends \PHPUnit\Framework\TestCase
 {
     public function testValidator()
     {

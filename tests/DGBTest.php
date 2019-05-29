@@ -2,7 +2,7 @@
 
 use Murich\PhpCryptocurrencyAddressValidation\Validation\DGB;
 
-class DGBTest extends PHPUnit_Framework_TestCase
+class DGBTest extends \PHPUnit\Framework\TestCase
 {
     public function testValidator()
     {

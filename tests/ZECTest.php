@@ -2,7 +2,7 @@
 
 use Murich\PhpCryptocurrencyAddressValidation\Validation\ZEC;
 
-class ZECTest extends PHPUnit_Framework_TestCase
+class ZECTest extends \PHPUnit\Framework\TestCase
 {
     public function testValidator()
     {
