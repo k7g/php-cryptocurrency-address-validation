@@ -2,7 +2,9 @@
 
 Easy to use PHP cryptocurrency address validation lib.
 
-Forked from https://github.com/murich/php-cryptocurrency-address-validation
+Forked from https://github.com/murich/php-cryptocurrency-address-validation.
+
+Provides address validations for the following cryptocurrencies:
 
 - BTC
 - DASH
@@ -11,9 +13,10 @@ Forked from https://github.com/murich/php-cryptocurrency-address-validation
 - LTC
 - ZEC
 
-In this fork validation for following currencies is implemented:
+Added in this fork:
 
 - BCH (Bitcoin Cash)
+- NEO
 - XRP (Ripple)
 
 ## Usage
