@@ -1,14 +1,14 @@
 <?php
-/**
- * Bitcoin Cash (BCH) address validation class.
- * Implementation borrowed from https://github.com/bitcoincoltd/cashaddress
- */
 
 namespace Murich\PhpCryptocurrencyAddressValidation\Validation;
 
 use Exception;
 use Murich\PhpCryptocurrencyAddressValidation\Validation;
 
+/**
+ * Bitcoin Cash (BCH) address validation class.
+ * Implementation borrowed from https://github.com/bitcoincoltd/cashaddress
+ */
 class BCH extends Validation
 {
     /**
