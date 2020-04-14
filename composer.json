@@ -1,5 +1,6 @@
 {
     "name": "k7g/php-cryptocurrency-address-validation",
+    "version": "1.0.0",
     "description": "Cryptocurrency address validation.",
     "authors": [
         {
